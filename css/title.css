@@ -1,0 +1,14 @@
+#page-header.full_page #site-info {
+    top: 40%;
+}
+
+#page-header #site-title {
+    font-size: 3.25em;
+    text-shadow: 2px 2px #35353580;
+
+}
+
+#page-header #site-subtitle {
+    line-height: 15em;
+    text-shadow: 2px 2px #35353580;
+}
