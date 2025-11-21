@@ -4,7 +4,7 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-    z-index: 2000;
+    z-index: 2001;
     position: relative;
     margin: auto;
     left: 3vw;
@@ -13,6 +13,12 @@
     background: url( 'https://blog.material.electro-dragon.site/loading_text_before.png');
     background-size: 100% 100%;   /* 防止拉伸 */
     overflow: hidden
+}
+
+@media screen and (max-width: 1000px) {
+  .pace {
+    left: 0;
+  }
 }
 
 .pace-inactive .pace-progress {
