@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'gi-font'; /* 这里是字体的代号，可自定义 */
-  src: url('/fonts/gi-font-zh-cn.woff2') format('woff2');
+  src: url('fonts/gi-font-zh-cn.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap; /* 推荐，避免加载字体时文字消失 */
