@@ -9,8 +9,11 @@
 
 @media screen and (max-width: 700px) {
   #page-header #site-title {
-      font-size: 35px;
+      font-size: 28px;
   }
+  #page-header #site-subtitle {
+    font-size: 18px;
+}
 }
 
 #page-header #site-subtitle {
