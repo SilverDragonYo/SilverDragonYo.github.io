@@ -7,16 +7,28 @@
     text-shadow: 2px 2px #35353580;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 500px) {
   #page-header #site-title {
-      font-size: 27px;
+      font-size: 28px;
   }
   #page-header #site-subtitle {
-    font-size: 16px;
+    font-size: 15px;
   }
 }
 
+@media screen and (min-width: 500px) and (max-width: 850px) {
+  #page-header #site-title {
+      font-size: 2.5em;
+  }
+  #page-header #site-subtitle {
+    font-size: 1.2em;
+  }
+}
+
+
+
 #page-header #site-subtitle {
-    line-height: 15em;
+  position: relative;
+    top: 20vh;
     text-shadow: 2px 2px #35353580;
 }
