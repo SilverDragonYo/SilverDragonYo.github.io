@@ -313,7 +313,7 @@
 				return false;
 			}
 			el = this.getElement();
-      transform = "inset(0 " + (100 - this.progress) + "% 0 0)";
+      transform = "inset(0 " + (100 - this.progress) + "% 0 0)";    //这里
 			el.children[0].style.clipPath = transform;
 			// _ref2 = ['webkitTransform', 'msTransform', 'transform'];
 			// for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
