@@ -139,13 +139,24 @@
   isHighlightShrink: false,
   isToc: true,
   pageType: 'post'
-}</script><link rel="stylesheet" href="/css/bg.css"><link rel="stylesheet" href="/css/font.css"><link rel="stylesheet" href="/css/title.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="image-loading-box"><div class="loading-bg"></div><div class="image-container"><img class="load-image" src="https://blog-material.electro-dragon.site/keqing_bg.png" alt=""/></div></div><script>(()=>{
-  const $loadingBox = document.getElementById('image-loading-box')
+}</script><link rel="stylesheet" href="/css/bg.css"><link rel="stylesheet" href="/css/font.css"><link rel="stylesheet" href="/css/title.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-bg"></div><div class="loading-bar-outer"><div class="loading-bar"><img class="load-image" src="/../img/loading-bar.png" alt=""/></div><div class="loading-word"></div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
   const $body = document.body
+
+  //- Randomly select a loading word if available
+  document.addEventListener('DOMContentLoaded', () => {
+    const loadingWords = ["前面的区域，以后再来探索吧","无法进入时，请尝试刷新页面","什么什么神，什么什么启动","正在加载中，请稍等片刻"]
+    const el = document.querySelector('.loading-word');
+    if (el && loadingWords.length > 0) {
+      const index = Math.floor(Math.random() * loadingWords.length)
+      el.textContent = "-" + " " + loadingWords[index] + " " + "-"
+    }
+  })
+  
   const preloader = {
     endLoading: () => {
-      $body.style.overflow = ''
-      $loadingBox.classList.add('loaded')
+        $body.style.overflow = ''
+        $loadingBox.classList.add('loaded')
     },
     initLoading: () => {
       $body.style.overflow = 'hidden'
@@ -154,7 +165,34 @@
   }
 
   preloader.initLoading()
-  window.addEventListener('load', preloader.endLoading)
+
+  const bindPace = () => {
+    if (typeof Pace !== 'undefined') {
+      Pace.on('done', () => {
+        setTimeout(preloader.endLoading, 1000)
+      })
+      if (!Pace.running) {
+        console.log('Pace not running')
+      } else {
+        console.log('Pace not loaded yet, falling back to standard load.')
+      } 
+    }
+  }
+
+  bindPace();
+
+  window.addEventListener('load', () => {
+    if (typeof Pace !== 'undefined') {
+      Pace.bar.finish()
+      Pace.stop()
+      setTimeout(preloader.endLoading, 1000)
+    } else {
+      console.log('Pace not loaded, using window load event.')
+      preloader.endLoading()
+    }
+  })
+
+
 
   if (false) {
     btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
@@ -168,7 +206,7 @@ btf.addGlobalFn('pjaxSend', () => {
   Pace.restart()
 }, 'pace_restart')
 
-</script><link rel="stylesheet" href="/./css/pace.css"/><script src="/js/pace.js"></script><div id="web_bg" style="background-image: url(https://blog-material.electro-dragon.site/default_background_img.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://blog-material.electro-dragon.site/my_avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://blog-material.electro-dragon.site/my_logo.png" alt="Logo"></a><a class="nav-page-title" href="/"><span class="site-name">使用Cloudflare Workers写一个简单的激活码校验脚本</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">使用Cloudflare Workers写一个简单的激活码校验脚本</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-12-14T14:04:52.000Z" title="发表于 2025-12-14 22:04:52">2025-12-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-02-14T14:57:21.472Z" title="更新于 2026-02-14 22:57:21">2026-02-14</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><ol>
+</script><link rel="stylesheet" href="/./css/pace.css"/><script src="/js/pace.js"></script><div id="web_bg" style="background-image: url(https://blog-material.electro-dragon.site/default_background_img.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://blog-material.electro-dragon.site/my_avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/changelog/"><i class="fa-fw fas fa-history"></i><span> 更新记录</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://blog-material.electro-dragon.site/my_logo.png" alt="Logo"></a><a class="nav-page-title" href="/"><span class="site-name">使用Cloudflare Workers写一个简单的激活码校验脚本</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/changelog/"><i class="fa-fw fas fa-history"></i><span> 更新记录</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">使用Cloudflare Workers写一个简单的激活码校验脚本</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-12-14T14:04:52.000Z" title="发表于 2025-12-14 22:04:52">2025-12-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-02-14T14:57:21.472Z" title="更新于 2026-02-14 22:57:21">2026-02-14</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><ol>
 <li>
 <h3 id="Cloudflare-Workers介绍">Cloudflare Workers介绍</h3>
 <p>Cloudflare Workers 是 Cloudflare 提供的一种边缘计算运行环境，用于在接近用户的位置执行自定义代码，从而对 HTTP 请求与响应进行处理。可以实现轻量的后端。</p>

@@ -1,55 +1,22 @@
+:root {
+  --pace-background-color: #666;
+  --pace-prospect-color: #f5f5f5;
+  --pace-img-height: 64px;
+  --pace-img-width: 512px;
+}
 .pace {
-    -webkit-pointer-events: none;
-    pointer-events: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-    z-index: 2001;
-    position: relative;
-    margin: auto;
-    left: 3vw;
-    width: 375px;
-    height: 57px;
-    background: url( 'https://blog-material.electro-dragon.site/loading_text_before.png');
-    background-size: 100% 100%;   /* 防止拉伸 */
-    overflow: hidden
+  z-index: 2000;
+  width: var(--pace-img-width);
+  height: var(--pace-img-height);
+  overflow: hidden;
 }
-
-@media screen and (max-width: 1000px) {
-  .pace {
-    left: 0;
-    width: 300px;
-    height: 45.6px;
-  }
-}
-@media screen and (max-width: 700px) {
-  .pace {
-    left: 0;
-    width: 225px;
-    height: 34.2px;
-  }
-}
-
-.pace-inactive .pace-progress {
-    opacity: 0;
-    transition: .3s ease-in
-}
-
 .pace .pace-progress {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    -o-box-sizing: border-box;
-    box-sizing: border-box;
-    clip-path: (0 100% 0 0);
-    position: absolute;
-    z-index: 2001;
-    display: block;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    background: url( 'https://blog-material.electro-dragon.site/loading_text_after.png');
-    animation: gradient 2s ease infinite;
-    background-size: 100% 100%;   /* 防止拉伸 */
+  position: absolute;
+  z-index: 2002;
+  clip-path: inset(0 100% 0 0);
+  width: var(--pace-img-width);
+  height: var(--pace-img-height);
+  background: url("../img/loading-bar.png") no-repeat;
+  background-size: var(--pace-img-width) var(--pace-img-height);
+  animation: gradient 2s ease infinite;
 }
-

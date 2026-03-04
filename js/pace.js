@@ -22,10 +22,10 @@
 		startOnPageLoad: true,
 		restartOnPushState: true,
 		restartOnRequestAfter: 500,
-		target: '.image-container',
+		target: '.loading-bar',
 		elements: {
 			checkInterval: 100,
-			selectors: ['.image-container']
+			selectors: ['.loading-bar']
 		},
 		eventLag: {
 			minSamples: 10,
